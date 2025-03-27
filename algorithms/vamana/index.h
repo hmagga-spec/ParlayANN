@@ -78,8 +78,9 @@ struct knn_index {
     auto less = [&](std::pair<indexType, distanceType> a, std::pair<indexType, distanceType> b) {
       return a.second < b.second || (a.second == b.second && a.first < b.first);
     };
-    std::sort(candidates.begin(), candidates.end(), less);
-
+    // std::sort(candidates.begin(), candidates.end(), less);
+    std::mt19937 g(42);
+    std::shuffle(candidates.begin(), candidates.end(), g);
     // remove any duplicates
     auto new_end =std::unique(candidates.begin(), candidates.end(),
 			      [&] (auto x, auto y) {return x.first == y.first;});
